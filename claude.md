@@ -147,7 +147,63 @@
             6. EL ARCHIVO .DOCX ORIGINAL SE ELIMINA AUTOMÁTICAMENTE
             7. Solo se conservan archivos que fallan al eliminarse (con aviso)
         </automatico>
-        
+
+        <automatico_al_inicio_windows>
+            <metodo_simple_carpeta_inicio>
+                - Método más simple para iniciar monitor automáticamente al encender Windows
+                - No requiere configurar Programador de Tareas
+                - Pasos:
+                  1. Presionar Win + R
+                  2. Escribir: shell:startup
+                  3. Presionar Enter (se abre carpeta de Inicio)
+                  4. Clic derecho en la carpeta → Nuevo → Acceso directo
+                  5. En ubicación del acceso directo, pegar:
+                     powershell.exe -ExecutionPolicy Bypass -NoProfile -WindowStyle Normal -File "C:\Users\Said Ajure\Desktop\vibecoded-demo-\monitor.ps1"
+                  6. Clic en Siguiente
+                  7. Nombre del acceso directo: Monitor Word HTML
+                  8. Clic en Finalizar
+                - Al reiniciar Windows, el monitor se iniciará automáticamente
+                - Para detener: cerrar la ventana de PowerShell o desde Administrador de tareas
+                - Ventaja: Configuración simple de 2 minutos
+                - Desventaja: Menos control sobre ejecución que Programador de Tareas
+            </metodo_simple_carpeta_inicio>
+
+            <metodo_avanzado_programador_tareas>
+                - Método profesional usando Programador de Tareas de Windows
+                - Mayor control sobre cuándo y cómo se ejecuta
+                - Pasos:
+                  1. Abrir Programador de tareas (Win + S → "Programador de tareas")
+                  2. Clic en "Crear tarea..." (no "Crear tarea básica")
+                  3. General:
+                     - Nombre: Monitor Word to HTML Automático
+                     - Marcar: "Ejecutar con los privilegios más altos"
+                     - Marcar: "Ejecutar solo cuando el usuario haya iniciado sesión"
+                  4. Desencadenadores → Nuevo:
+                     - Iniciar la tarea: "Al iniciar sesión"
+                     - Usuario específico: [tu usuario]
+                  5. Acciones → Nueva:
+                     - Programa: powershell.exe
+                     - Argumentos: -ExecutionPolicy Bypass -NoProfile -File "C:\Users\Said Ajure\Desktop\vibecoded-demo-\monitor.ps1"
+                     - Iniciar en: C:\Users\Said Ajure\Desktop\vibecoded-demo-
+                  6. Condiciones:
+                     - Desmarcar: "Iniciar solo si está conectado a CA"
+                  7. Configuración:
+                     - Marcar: "Permitir que la tarea se ejecute a petición"
+                  8. Aceptar → Ingresar contraseña de Windows si se solicita
+                - Ventaja: Control total, logs automáticos, reintentos configurables
+                - Desventaja: Configuración más compleja
+            </metodo_avanzado_programador_tareas>
+
+            <nota_importante>
+                - AMBOS métodos funcionan con rutas relativas
+                - Si mueves la carpeta del proyecto, actualiza las rutas en:
+                  * Acceso directo en carpeta Inicio, O
+                  * Tarea programada en Programador de Tareas
+                - El proyecto funciona en cualquier ubicación (Desktop, Documents, C:\, D:\, etc.)
+                - Los scripts usan rutas relativas que se adaptan automáticamente
+            </nota_importante>
+        </automatico_al_inicio_windows>
+
         <manual>
             1. Ejecutar word2html.bat con el archivo deseado
             2. Por defecto: convierte + copia + ELIMINA el archivo original
@@ -261,5 +317,149 @@
             - ✅ Tracking inteligente de archivos procesados vs. eliminados
         </testing_realizado>
     </mejoras_recientes>
+
+    <configuracion_inicial>
+        <version>v3.0 - Configuración Post-Formateo</version>
+        <fecha>2025-10-10</fecha>
+
+        <requisitos_sistema>
+            <python>
+                - Versión: Python 3.14.0 (64-bit)
+                - Ubicación: C:\Python314\python.exe
+                - pip: 25.2
+                - Estado: ✅ Instalado y funcional
+            </python>
+
+            <dependencias_instaladas>
+                - watchdog 6.0.0 (monitor de archivos en tiempo real)
+                - mammoth 1.11.0 (conversión .docx → HTML)
+                - beautifulsoup4 4.14.2 (procesamiento HTML)
+                - python-docx 1.2.0 (manipulación archivos .docx)
+                - Dependencias secundarias: cobble, lxml, soupsieve, typing-extensions
+                - Estado: ✅ Todas instaladas correctamente
+            </dependencias_instaladas>
+
+            <herramientas_sistema>
+                - clip.exe: C:\Windows\System32\clip.exe ✅
+                - PowerShell: Disponible ✅
+                - Encoding consola: cp1252 (manejado por scripts) ⚠️
+                - Encoding Python: UTF-8 ✅
+            </herramientas_sistema>
+        </requisitos_sistema>
+
+        <instalacion_dependencias>
+            <comando_instalacion>
+                pip install watchdog mammoth beautifulsoup4
+            </comando_instalacion>
+
+            <verificacion>
+                python -c "import watchdog; import mammoth; import bs4; print('✅ Todas las dependencias OK')"
+            </verificacion>
+
+            <notas>
+                - Los scripts .bat instalan dependencias automáticamente si faltan
+                - No requiere instalación manual en uso normal
+                - Ubicación de instalación: C:\Users\Said Ajure\AppData\Roaming\Python\Python314\site-packages
+            </notas>
+        </instalacion_dependencias>
+
+        <verificacion_sistema>
+            <test_basico>
+                # Verificar que word_to_html.py funciona
+                python word_to_html.py --help
+
+                # Debe mostrar:
+                # ✅ Configuración UTF-8 exitosa: ñáéíóúü¿¡
+                # [menú de ayuda del script]
+            </test_basico>
+
+            <test_monitor>
+                # Probar monitor manualmente
+                python auto_word_watcher.py
+                # O
+                .\monitor.ps1
+                # O
+                iniciar_monitor.bat
+
+                # Debe mostrar banner y mensaje "Monitor iniciado. Esperando archivos Word..."
+            </test_monitor>
+        </verificacion_sistema>
+
+        <estado_componentes>
+            🟢 Python 3.14.0 - Funcional
+            🟢 pip 25.2 - Funcional
+            🟢 watchdog 6.0.0 - Instalado
+            🟢 mammoth 1.11.0 - Instalado
+            🟢 beautifulsoup4 4.14.2 - Instalado
+            🟢 python-docx 1.2.0 - Instalado
+            🟢 clip.exe - Disponible
+            🟢 Scripts .py - Encoding UTF-8 correcto
+            🟢 Scripts .bat - Sintaxis correcta
+            🟢 CSS personalizado - Presente
+            🟡 Encoding consola - Manejado por scripts
+            🟡 PATH scripts - No crítico
+
+            Leyenda:
+            🟢 Verde: Funcionando perfectamente
+            🟡 Amarillo: Con advertencias pero funcional
+            🔴 Rojo: Requiere intervención manual
+        </estado_componentes>
+
+        <configuracion_inicio_automatico>
+            <metodo_recomendado>Carpeta de Inicio (simple)</metodo_recomendado>
+
+            <pasos_carpeta_inicio>
+                1. Win + R → escribir: shell:startup → Enter
+                2. Clic derecho → Nuevo → Acceso directo
+                3. Ubicación: powershell.exe -ExecutionPolicy Bypass -NoProfile -WindowStyle Normal -File "C:\Users\Said Ajure\Desktop\vibecoded-demo-\monitor.ps1"
+                4. Nombre: Monitor Word HTML
+                5. Finalizar
+                6. Al reiniciar Windows, se iniciará automáticamente
+            </pasos_carpeta_inicio>
+
+            <alternativa_profesional>
+                Programador de Tareas - Ver sección <metodo_avanzado_programador_tareas> arriba
+            </alternativa_profesional>
+        </configuracion_inicio_automatico>
+
+        <ubicacion_proyecto>
+            - Ubicación actual: C:\Users\Said Ajure\Desktop\vibecoded-demo-
+            - El proyecto funciona en cualquier ubicación (usa rutas relativas)
+            - Si se mueve la carpeta, actualizar ruta en:
+              * Acceso directo de carpeta Inicio, O
+              * Tarea programada (si se usó Programador de Tareas)
+        </ubicacion_proyecto>
+
+        <comandos_verificacion_rapida>
+            # Verificar Python
+            python --version
+
+            # Verificar pip
+            pip --version
+
+            # Listar dependencias instaladas
+            pip list | grep -E "(watchdog|mammoth|beautifulsoup4)"
+
+            # Test de conversión
+            python word_to_html.py --help
+
+            # Verificar clip.exe
+            where clip.exe
+        </comandos_verificacion_rapida>
+
+        <sistema_listo>
+            ✅ Sistema 100% configurado y funcional
+            ✅ No se requieren pasos manuales adicionales
+            ✅ Todas las dependencias instaladas
+            ✅ Scripts validados y operativos
+            ✅ Portapapeles funcional
+            ✅ Encoding UTF-8 configurado
+
+            LISTO PARA USAR:
+            - Doble clic en iniciar_monitor.bat (uso inmediato)
+            - word2html.bat archivo.docx (conversión manual)
+            - Configurar inicio automático (opcional, ver arriba)
+        </sistema_listo>
+    </configuracion_inicial>
 </proyecto>
 ```
