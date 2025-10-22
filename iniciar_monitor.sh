@@ -4,12 +4,38 @@
 # Obtener el directorio donde está el script
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Banner
+# Banner con colores
 clear
-echo "==========================================="
-echo "  MONITOR AUTOMÁTICO WORD → HTML"
-echo "  macOS Edition"
-echo "==========================================="
+
+# Colores ANSI
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+RED='\033[0;31m'
+WHITE='\033[1;37m'
+NC='\033[0m' # No Color
+
+echo ""
+echo -e "${GREEN}SSSSS   AAA   III  DDD   ${NC}"
+echo -e "${GREEN}S      A   A   I   D   D  ${NC}"
+echo -e "${GREEN}SSSSS  AAAAA   I   D   D  ${NC}"
+echo -e "${GREEN}    S  A   A   I   D   D  ${NC}"
+echo -e "${GREEN}SSSSS  A   A  III  DDD   ${NC}"
+echo ""
+echo -e "${YELLOW}EEEEE  SSSSS  TTTTT  U   U  V   V  OOO  ${NC}"
+echo -e "${YELLOW}E      S        T    U   U  V   V  O   O${NC}"
+echo -e "${YELLOW}EEEEE  SSSSS    T    U   U  V   V  O   O${NC}"
+echo -e "${YELLOW}E          S    T    U   U   V V   O   O${NC}"
+echo -e "${YELLOW}EEEEE  SSSSS    T     UUU     V    OOO  ${NC}"
+echo ""
+echo -e "${CYAN} AAA    CCC    AAA   ${NC}"
+echo -e "${CYAN}A   A  C      A   A  ${NC}"
+echo -e "${CYAN}AAAAA  C      AAAAA  ${NC}"
+echo -e "${CYAN}A   A  C      A   A  ${NC}"
+echo -e "${CYAN}A   A   CCC   A   A  ${NC}"
+echo ""
+echo -e "${RED}       MONITOR WORD → HTML       ${NC}"
+echo -e "${WHITE}====================================${NC}"
 echo ""
 echo "Directorio: $SCRIPT_DIR"
 echo ""
