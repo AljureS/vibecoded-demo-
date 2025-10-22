@@ -1,0 +1,13 @@
+#!/bin/bash
+# Launcher para la aplicación Monitor Word HTML
+
+# Obtener el directorio del proyecto (dos niveles arriba de MacOS)
+APP_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd ../../.. && pwd )"
+
+# Abrir Terminal y ejecutar el script de inicio
+osascript <<EOF
+tell application "Terminal"
+    activate
+    do script "cd '$APP_DIR' && ./iniciar_monitor.sh"
+end tell
+EOF
